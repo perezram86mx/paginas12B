@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<!-- Declaración del tipo de documento HTML5 -->
+<html lang="es">
+<!-- Inicio del documento HTML y definición del idioma español -->
+<head>
+  <!-- Definición del conjunto de caracteres UTF-8 para admitir acentos y caracteres especiales -->
+  <meta charset="UTF-8">
+  <!-- Título que aparece en la pestaña del navegador -->
+  <title>Mi Red Social Dinámica</title>
+  <!-- Bloque de estilos CSS embebidos -->
+  <style>
+    /* Regla universal para reiniciar márgenes, rellenos y cambiar el modelo de caja */
+    * {
+      margin: 0; /* Elimina el margen predeterminado de todos los elementos */
+      padding: 0; /* Elimina el padding predeterminado de todos los elementos */
+      box-sizing: border-box; /* Incluye border y padding en el ancho total */
+    }
+
+    /* Estilos del cuerpo del documento */
+    body {
+      font-family: 'Chileno', serif; /* Cambiada la fuente a Chileno */
+      background: #fff8e1; /* Fondo cambiado de azul/gris a un tono amarillo claro */
+      color: #333333; /* Color de texto principal en gris oscuro */
+      line-height: 1.6; /* Altura de línea para mejorar la legibilidad del texto */
+    }
+
+    /* Estilos del encabezado principal (barra superior) */
+    .topbar {
+      display: flex; /* Uso de flexbox para alinear contenido */
+      justify-content: space-between; /* Espaciado uniforme entre título y usuario */
+      align-items: center; /* Alineación vertical central */
+      background: #ffb300; /* Fondo cambiado de azul a amarillo ámbar brillante */
+      color: #1a1a1a; /* Texto oscuro para contrastar con el fondo amarillo */
+      padding: 1.5rem 3rem; /* Incrementado el relleno vertical y horizontal */
+      border-bottom: 4px solid #ff6f00; /* Línea inferior dorada oscura agregada */
+    }
+
+    /* Estilo del título en la barra superior */
+    .topbar h1 {
+      font-size: 1.8rem; /* Tamaño de fuente para el título principal */
+      letter-spacing: 1px; /* Espaciado entre letras en el título */
+    }
+
+    /* Estilo del identificador de usuario en la barra superior */
+    .usuario {
+      font-weight: bold; /* Texto en negrita para el nombre del usuario */
+      background: #ffa000; /* Fondo naranja suave para resaltar el usuario */
+      padding: 0.5rem 1rem; /* Relleno alrededor del nombre de usuario */
+      border-radius: 20px; /* Bordes redondeados tipo píldora */
+    }
+
+    /* Estilos del contenedor principal del feed */
+    .feed {
+      max-width: 700px; /* Incrementado el ancho máximo del feed a 700px */
+      margin: 2.5rem auto; /* Ajustados los márgenes superior e inferior */
+      display: flex; /* Flexbox en dirección de columna */
+      flex-direction: column; /* Alineación vertical de las tarjetas */
+      gap: 1.5rem; /* Separación aumentada entre publicaciones */
+    }
+
+    /* Estilos de la tarjeta de publicación */
+    .publicacion {
+      background: #ffffff; /* Fondo blanco para las tarjetas de publicación */
+      border-radius: 12px; /* Incrementado el radio del borde para esquinas suaves */
+      padding: 1.5rem; /* Incrementado el padding interno de la tarjeta */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+      border: 1px solid #ffe082; /* Borde amarillo claro alrededor de las tarjetas */
+      transition: transform 0.2s ease; /* Transición suave para efecto hover */
+    }
+
+    /* Efecto al pasar el cursor sobre la tarjeta de publicación */
+    .publicacion:hover {
+      transform: translateY(-3px); /* Eleva la tarjeta 3px al pasar el cursor */
+    }
+
+    /* Estilos de la cabecera de la publicación (autor) */
+    .autor {
+      display: flex; /* Flexbox para colocar la foto y el nombre alineados */
+      align-items: center; /* Centrado vertical de la imagen y texto */
+      gap: 0.8rem; /* Distancia entre el avatar y el nombre */
+      margin-bottom: 0.8rem; /* Margen inferior antes del texto del post */
+    }
+
+    /* Estilos de la imagen de perfil del autor */
+    .autor img {
+      width: 50px; /* Ancho aumentado a 50px */
+      height: 50px; /* Alto aumentado a 50px */
+      border-radius: 50%; /* Corte circular perfecto para la foto */
+      object-fit: cover; /* Ajuste proporcional de la imagen */
+      border: 2px solid #ffb300; /* Borde amarillo alrededor de la foto del autor */
+    }
+
+    /* Estilos del texto o cuerpo del mensaje */
+    .mensaje {
+      font-size: 1.05rem; /* Tamaño de fuente ligeramente incrementado */
+      margin-bottom: 1rem; /* Margen inferior antes de los recursos multimedia */
+      color: #2c2c2c; /* Color de texto del mensaje */
+    }
+
+    /* Contenedor multimedia para imágenes, video o audio adjuntos */
+    .media-container {
+      width: 100%; /* El contenedor ocupa el 100% del ancho del post */
+      margin-top: 0.8rem; /* Espaciado superior respecto al texto */
+      border-radius: 8px; /* Esquinas redondeadas para el contenedor multimedia */
+      overflow: hidden; /* Corta elementos que sobresalgan del contenedor */
+    }
+
+    /* Estilos para las imágenes adjuntas a una publicación */
+    .media-container img {
+      width: 100%; /* Ajusta la imagen al ancho total disponible */
+      max-height: 350px; /* Limita la altura máxima de la imagen */
+      object-fit: cover; /* Recorta proporcionalmente para llenar el espacio */
+      display: block; /* Elimina espacio blanco inferior de las imágenes */
+    }
+
+    /* Estilos para los videos adjuntos */
+    .media-container video {
+      width: 100%; /* Ajusta el video al ancho total disponible */
+      max-height: 350px; /* Limita la altura máxima del video */
+      border-radius: 8px; /* Bordes redondeados para el reproductor */
+    }
+
+    /* Estilos para los reproductores de audio */
+    .media-container audio {
+      width: 100%; /* El reproductor de audio ocupa el ancho completo */
+      margin-top: 0.5rem; /* Espaciado superior */
+    }
+
+    /* Estilos de la barra de acciones (botones) */
+    .acciones {
+      display: flex; /* Flexbox horizontal para alinear botones */
+      gap: 1.2rem; /* Espaciado entre botones de interacción */
+      margin-top: 1rem; /* Separación respecto a la multimedia o texto */
+      border-top: 2px solid #fff3e0; /* Línea de división de color crema */
+      padding-top: 0.8rem; /* Relleno superior interno */
+    }
+
+    /* Estilo base de los botones de acción */
+    .acciones button {
+      background: #fff8e1; /* Fondo amarillo muy claro en botones */
+      border: 1px solid #ffb300; /* Borde amarillo dorado */
+      color: #d84315; /* Texto cambiado de azul a tono café/naranja intenso */
+      padding: 0.4rem 0.8rem; /* Relleno interno del botón */
+      border-radius: 6px; /* Esquinas ligeramente redondeadas */
+      cursor: pointer; /* Cambia el puntero al pasar sobre el botón */
+      font-size: 0.95rem; /* Tamaño del texto del botón */
+      font-weight: bold; /* Texto en negrita para mejor visibilidad */
+      transition: background 0.2s; /* Transición suave al cambiar fondo */
+    }
+
+    /* Efecto al pasar el cursor sobre los botones */
+    .acciones button:hover {
+      background: #ffe082; /* Cambio a fondo amarillo más oscuro al hacer hover */
+      text-decoration: none; /* Sin subrayado */
+    }
+
+    /* Pie de página explicativo */
+    .footer-nota {
+      text-align: center; /* Alineación centrada del texto del pie de página */
+      padding: 2rem 0; /* Relleno vertical para separar del feed */
+      font-size: 0.85rem; /* Tamaño de fuente pequeño para nota al pie */
+      color: #7f6000; /* Color café dorado para el pie de página */
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Encabezado de la página web -->
+  <header class="topbar">
+    <!-- Título principal del sitio web -->
+    <h1>Conecta Ámbar</h1>
+    <!-- Elemento contenedor del perfil del usuario activo -->
+    <div class="usuario">Hola, Ana</div>
+  </header>
+
+  <!-- Contenedor principal de publicaciones (Feed) -->
+  <main class="feed">
+
+    <!-- Publicación 1 -->
+    <article class="publicacion">
+      <!-- Cabecera de la publicación con avatar y nombre -->
+      <div class="autor">
+        <!-- Recurso Visual 1: Imagen de avatar del usuario Luis -->
+        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&auto=format&fit=crop" alt="Avatar de Luis">
+        <strong>Luis</strong>
+      </div>
+      <!-- Texto de la primera publicación -->
+      <p class="mensaje">¡Hoy es un gran día para salir a tomar fotos a la naturaleza!</p>
+      
+      <!-- Contenedor del recurso multimedia -->
+      <div class="media-container">
+        <!-- Recurso Visual 2: Imagen adjunta al post de Luis -->
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=700&auto=format&fit=crop" alt="Paisaje natural de montañas">
+      </div>
+
+      <!-- Barra de interacción y botones -->
+      <div class="acciones">
+        <button>👍 Me gusta (12)</button>
+        <button>💬 Comentar</button>
+      </div>
+    </article>
+
+    <!-- Publicación 2 -->
+    <article class="publicacion">
+      <!-- Cabecera de la publicación con avatar y nombre -->
+      <div class="autor">
+        <!-- Recurso Visual 3: Imagen de avatar del usuario María -->
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop" alt="Avatar de María">
+        <strong>María</strong>
+      </div>
+      <!-- Texto de la segunda publicación -->
+      <p class="mensaje">Compartiendo un fragmento del ambiente en mi taller de arquitectura.</p>
+      
+      <!-- Contenedor de recurso de video -->
+      <div class="media-container">
+        <!-- Recurso Visual 4: Video de demostración insertado en la publicación -->
+        <video controls poster="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700&auto=format&fit=crop">
+          <source src="https://cdn.coverr.co/videos/coverr-a-person-working-on-a-laptop-5412/1080p.mp4" type="video/mp4">
+          Tu navegador no soporta el reproductor de video.
+        </video>
+      </div>
+
+      <!-- Barra de interacción y botones -->
+      <div class="acciones">
+        <button>👍 Me gusta (5)</button>
+        <button>💬 Comentar</button>
+      </div>
+    </article>
+
+    <!-- Publicación 3 (Adicional para integrar el quinto recurso) -->
+    <article class="publicacion">
+      <!-- Cabecera de la publicación -->
+      <div class="autor">
+        <!-- Avatar de Carlos -->
+        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=100&auto=format&fit=crop" alt="Avatar de Carlos">
+        <strong>Carlos</strong>
+      </div>
+      <!-- Texto de la publicación -->
+      <p class="mensaje">Escuchando la maqueta final de nuestra nueva pista musical. ¿Qué opinan?</p>
+      
+      <!-- Contenedor de recurso de audio -->
+      <div class="media-container">
+        <!-- Recurso Visual 5: Reproductor de audio con fuente pública -->
+        <audio controls>
+          <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+          Tu navegador no soporta el elemento de audio.
+        </audio>
+      </div>
+
+      <!-- Barra de interacción y botones -->
+      <div class="acciones">
+        <button>👍 Me gusta (8)</button>
+        <button>💬 Comentar</button>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- Pie de página -->
+  <footer class="footer-nota">
+    <p>© 2026 Conecta Ámbar - Red Social Modificada</p>
+  </footer>
+
+</body>
+</html>
